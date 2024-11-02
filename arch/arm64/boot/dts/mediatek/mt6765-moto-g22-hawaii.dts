@@ -1,0 +1,58 @@
+/dts-v1/;
+/plugin/;
+
+#include "mt6765.dtsi"
+
+/ {
+    model = "Motorola G22 (hawaii)";
+    compatible = "motorola,hawaii", "mediatek,mt6765";
+
+    chosen {
+        bootargs = "console=tty0 console=ttyS0,921600n1 root=/dev/ram";
+    };
+
+    memory {
+        device_type = "memory";
+        reg = <0 0x40000000 0 0x80000000>;
+    };
+
+    /* CPU configuration */
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        cpu0: cpu@0 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a53";
+            reg = <0x000>;
+            enable-method = "psci";
+            cpu-idle-states = <&CPU_SLEEP_0>;
+        };
+        /* Additional CPU nodes... */
+    };
+
+    /* GPU configuration */
+    mali: mali@13040000 {
+        compatible = "mediatek,mali-g37";
+        reg = <0 0x13040000 0 0x4000>;
+        interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_LOW>;
+        interrupt-names = "gpu";
+        clocks = <&mfgsys CLK_MFG_CORE>;
+        clock-names = "core";
+        operating-points-v2 = <&gpu_opp_table>;
+    };
+
+    /* Power management */
+    gpu_opp_table: gpu-opp-table {
+        compatible = "operating-points-v2";
+
+        opp-299000000 {
+            opp-hz = /bits/ 64 <299000000>;
+            opp-microvolt = <800000>;
+        };
+        opp-950000000 {
+            opp-hz = /bits/ 64 <950000000>;
+            opp-microvolt = <900000>;
+        };
+    };
+}; 

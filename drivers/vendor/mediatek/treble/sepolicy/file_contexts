@@ -1,0 +1,10 @@
+# Treble SEPolicy file contexts
+
+# Vendor files
+/vendor/bin/hw/android\.hardware\.audio@7\.1-service\.mt6765    u:object_r:hal_audio_default_exec:s0
+/vendor/bin/hw/android\.hardware\.camera@3\.5-service\.mt6765   u:object_r:hal_camera_default_exec:s0
+/vendor/lib(64)?/hw/audio\.primary\.mt6765\.so                  u:object_r:vendor_file:s0
+/vendor/lib(64)?/hw/camera\.mt6765\.so                         u:object_r:vendor_file:s0
+
+# Vendor properties
+/vendor/etc/vintf(/.*)?                                        u:object_r:vendor_configs_file:s0 
